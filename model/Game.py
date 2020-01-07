@@ -58,13 +58,10 @@ class ComputerPlayer(Player):
 
     def play_move(self, node):
         start = time.time_ns()
-        while time.time_ns() - start < 1000028200:
+        while time.time_ns() - start < 2000028200:
             MCTS.step(node)
 
-        move = \
-            sorted(node.children.values(), key=lambda x: x.percent,
-                   reverse=True)[
-                0].move
+        move = max(node.children.values(), key=lambda x: x.percent).move
         return move
 
 

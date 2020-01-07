@@ -25,16 +25,18 @@ class Node:
             return next_node
 
     def update_win(self, val, parent_visited=None):
-        if self.state.min_turn:
-            if val == 1:
-                self.wins += 1
-        else:
+        if val == 0:
+            self.wins += 1
+        elif self.state.max_turn:
             if val == -1:
-                self.wins += 1
+                self.wins += 2
+        elif self.state.min_turn:
+            if val == 1:
+                self.wins += 2
 
         self.percent = self.wins / self.visited
         if parent_visited:
-            self.ucb = self.percent + math.sqrt(2 * math.log2(parent_visited) / self.visited)
+            self.ucb = self.percent + math.sqrt(.5 * math.log2(parent_visited) / self.visited)
 
     def __eq__(self, other):
         return self.state == other.state
